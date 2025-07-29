@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPro Dashboard - Competition Ready</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>FitPro</span>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-item active" data-section="today">
+                    <i class="fas fa-home"></i>
+                    <span>Today</span>
+                </div>
+                
+                <div class="nav-item" data-section="nutrition">
+                    <i class="fas fa-utensils"></i>
+                    <span>Food Log</span>
+                </div>
+                
+                <div class="nav-item" data-section="workout">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>Workout Log</span>
+                </div>
+                
+                <div class="nav-item" data-section="sixpack">
+                    <i class="fas fa-running"></i>
+                    <span>Six-Pack Guide</span>
+                </div>
+                
+                <div class="nav-item" data-section="progress">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progress</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="username">Fitness Warrior</div>
+                        <div class="status">Competition Ready</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Health Alert -->
+            <div id="health-alert" class="health-alert hidden">
+                <div class="alert-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div class="alert-text">
+                        <div class="alert-title">Health Warning</div>
+                        <div class="alert-message"></div>
+                    </div>
+                    <button class="alert-close">&times;</button>
+                </div>
+            </div>
+
+            <!-- Today Section -->
+            <section id="today-section" class="content-section active">
+                <div class="section-header">
+                    <h1>Today's Overview</h1>
+                    <div class="date-display">
+                        <i class="fas fa-calendar"></i>
+                        <span id="current-date"></span>
+                    </div>
+                </div>
+
+                <!-- Budget Question -->
+                <div class="budget-card">
+                    <div class="card-header">
+                        <h3>Daily Budget Check</h3>
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="card-content">
+                        <p>Do you have budget for premium foods today?</p>
+                        <div class="budget-buttons">
+                            <button id="budget-yes" class="btn btn-primary">Yes, Premium</button>
+                            <button id="budget-no" class="btn btn-secondary">No, Budget-Friendly</button>
+                        </div>
+                        <div id="budget-status" class="budget-status"></div>
+                    </div>
+                </div>
+
+                <!-- Today's Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="today-calories">0</div>
+                            <div class="stat-label">Calories Consumed</div>
+                            <div class="stat-target">Target: 2500</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="today-protein">0g</div>
+                            <div class="stat-label">Protein</div>
+                            <div class="stat-target">Target: 180g</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="today-workouts">0</div>
+                            <div class="stat-label">Workouts</div>
+                            <div class="stat-target">Target: 1</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="today-duration">0min</div>
+                            <div class="stat-label">Exercise Time</div>
+                            <div class="stat-target">Target: 60min</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" data-action="add-meal">
+                            <i class="fas fa-plus"></i>
+                            Add Meal
+                        </button>
+                        <button class="action-btn" data-action="log-workout">
+                            <i class="fas fa-plus"></i>
+                            Log Workout
+                        </button>
+                        <button class="action-btn" data-action="sixpack-workout">
+                            <i class="fas fa-running"></i>
+                            Core Workout
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nutrition Section -->
+            <section id="nutrition-section" class="content-section">
+                <div class="section-header">
+                    <h1>Nutrition Tracker</h1>
+                    <button id="add-food-btn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Add Food
+                    </button>
+                </div>
+
+                <div class="nutrition-overview">
+                    <div class="nutrition-card">
+                        <h3>Today's Nutrition</h3>
+                        <canvas id="nutrition-chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <div class="food-log">
+                    <h3>Food Log</h3>
+                    <div id="food-entries" class="food-entries"></div>
+                </div>
+
+                <!-- Food Recommendations -->
+                <div class="recommendations">
+                    <h3>Recommended Foods</h3>
+                    <div id="food-recommendations" class="recommendation-grid"></div>
+                </div>
+            </section>
+
+            <!-- Workout Section -->
+            <section id="workout-section" class="content-section">
+                <div class="section-header">
+                    <h1>Workout Tracker</h1>
+                    <button id="add-workout-btn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Log Workout
+                    </button>
+                </div>
+
+                <div class="workout-stats">
+                    <div class="workout-card">
+                        <h3>Weekly Overview</h3>
+                        <canvas id="workout-chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <div class="workout-log">
+                    <h3>Recent Workouts</h3>
+                    <div id="workout-entries" class="workout-entries"></div>
+                </div>
+            </section>
+
+            <!-- Six-Pack Section -->
+            <section id="sixpack-section" class="content-section">
+                <div class="section-header">
+                    <h1>Six-Pack Guide</h1>
+                    <div class="guide-status">
+                        <span id="plan-type">Budget Plan</span>
+                    </div>
+                </div>
+
+                <div class="sixpack-content">
+                    <div class="exercise-guide">
+                        <h3>Core Exercises</h3>
+                        <div class="exercise-list" id="core-exercises"></div>
+                    </div>
+
+                    <div class="diet-guide">
+                        <h3>Cutting Diet</h3>
+                        <div class="diet-plan" id="cutting-diet"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Section -->
+            <section id="progress-section" class="content-section">
+                <div class="section-header">
+                    <h1>Progress Tracking</h1>
+                    <div class="progress-period">
+                        <select id="progress-period-select">
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="progress-charts">
+                    <div class="chart-container">
+                        <h3>Calorie Intake Trend</h3>
+                        <canvas id="calories-trend-chart"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Workout Frequency</h3>
+                        <canvas id="workout-frequency-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="achievement-badges">
+                    <h3>Achievements</h3>
+                    <div id="badges-container" class="badges-grid"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="food-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Food Entry</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="food-form">
+                    <div class="form-group">
+                        <label for="food-name">Food Item</label>
+                        <input type="text" id="food-name" placeholder="e.g., Boiled Eggs" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="food-quantity">Quantity</label>
+                        <input type="text" id="food-quantity" placeholder="e.g., 2 pieces, 1 cup" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meal-time">Meal Time</label>
+                        <select id="meal-time" required>
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="dinner">Dinner</option>
+                            <option value="snack">Snack</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Food</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="workout-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Log Workout</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="workout-form">
+                    <div class="form-group">
+                        <label for="workout-name">Exercise Name</label>
+                        <input type="text" id="workout-name" placeholder="e.g., Push-ups, Bench Press" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="workout-type">Type</label>
+                        <select id="workout-type" required>
+                            <option value="strength">Strength Training</option>
+                            <option value="cardio">Cardio</option>
+                        </select>
+                    </div>
+                    <div class="form-row" id="strength-fields">
+                        <div class="form-group">
+                            <label for="workout-sets">Sets</label>
+                            <input type="number" id="workout-sets" min="1" placeholder="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="workout-reps">Reps</label>
+                            <input type="number" id="workout-reps" min="1" placeholder="12">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="workout-duration">Duration (minutes)</label>
+                        <input type="number" id="workout-duration" min="1" placeholder="30" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Log Workout</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
